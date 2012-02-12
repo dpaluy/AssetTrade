@@ -1,4 +1,10 @@
 require 'bundler'
+
+if ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start 'rails'
+end
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -8,6 +14,6 @@ rescue Bundler::BundlerError => e
 end
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
-require 'strategy_runner'
 
+Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each {|file| require file }
 require 'rspec/expectations'
