@@ -1,5 +1,7 @@
 require "portfolio"
 require "settings"
+require 'set'
+require 'market_data'
 
 class Manager
   
@@ -30,14 +32,14 @@ class Manager
   
   def execute(order)    
     # TODO
+    # send_order_to_market(order)
+    # get execution result
+    
   end
   
   def build_initial_position(portfolio)
     strike = get_last_index_value
-    market_data = get_asset_data
-    quantity = get_initial_quantity(strike, portfolio.initial_investment, @settings.asset_adjustment)
-    
-    #portfolio.asset_actions.create!(:quantity => quantity, :price => strike)    
+    make_initial_asset_order(portfolio, strike)
   end
   
   private
@@ -46,4 +48,11 @@ class Manager
     (initial_investment * asset_adjustment / 100) / strike
   end
   
+  def make_initial_asset_order(portfolio,strike)
+    market_data = get_asset_data
+    quantity = get_initial_quantity(strike, portfolio.initial_invest, @settings.asset_adjustment)
+    buy_price = market_data.ask_price
+    order = Order.new(@settings.asset_id, quantity, buy_price)
+    execute(order)
+  end
 end

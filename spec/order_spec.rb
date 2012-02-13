@@ -4,8 +4,8 @@ require "order"
 describe "Order" do
 
   before(:each) do
-    @params = {quantity: 10, price: 250}
-    @order = Order.new  @params[:quantity], @params[:price]
+    @params = {id: 'my_asset_id', quantity: 10, price: 250}
+    @order = Order.new  @params[:id], @params[:quantity], @params[:price]
   end
   
   it 'should create order with initialized params' do
