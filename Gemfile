@@ -1,5 +1,8 @@
 source "http://rubygems.org"
 
+require 'rbconfig'
+HOST_OS = RbConfig::CONFIG['host_os']
+
 group :development do
   gem "rspec", "~> 2.8.0"
   gem "rdoc", "~> 3.12"
@@ -8,4 +11,17 @@ group :development do
   gem "simplecov"
   gem "rr"
   gem 'factory_girl'
+  gem "guard"
+  case HOST_OS
+    when /darwin/i
+      gem 'rb-fsevent'
+      gem 'growl'
+    when /linux/i
+      gem 'libnotify'
+      gem 'rb-inotify'
+    when /mswin|windows/i
+      gem 'rb-fchange'
+      gem 'win32console'
+      gem 'rb-notifu'
+  end
 end

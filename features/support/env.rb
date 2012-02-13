@@ -1,4 +1,8 @@
 require 'bundler'
+require 'rspec/expectations'
+require 'rr'
+require 'factory_girl'
+require 'factory_girl/step_definitions'
 
 if ENV['COVERAGE']
   require 'simplecov'
@@ -15,5 +19,6 @@ end
 
 $LOAD_PATH.unshift(File.dirname(__FILE__) + '/../../lib')
 
-Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each {|file| require file }
-require 'rspec/expectations'
+Dir[File.dirname(__FILE__) + '/../../lib/**/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/../../spec/factories/*.rb'].each {|f| puts f }
+

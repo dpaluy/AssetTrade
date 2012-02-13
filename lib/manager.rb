@@ -1,42 +1,29 @@
-require "portfolio"
-require "settings"
-require 'set'
 require 'market_data'
+require 'order'
+require 'portfolio'
+require 'settings'
+require 'set'
+require 'stock_market'
+require 'tools/numeric'
 
 class Manager
+  
+  attr_reader :settings, :stock_market
   
   def initialize
     @settings = Settings.new  
     @order_set = Set.new # SortedSet
+    @stock_market = StockMarket.new
   end
   
   def get_last_index_value
-    # TODO
-    1100  
+    @stock_market.get_index(@settings.index_id)  
   end
   
   def get_asset_data
-    # TODO
-    name = "TA25"
-    bid_price = nil
-    bid_volume = nil
-    ask_price = nil
-    ask_volume = nil
-    last_price = nil
-    MarketData.new(name, bid_price, bid_volume, ask_price, ask_volume, last_price)
+    @stock_market.get_data(@settings.asset_id)
   end
-  
-  def update_portfolio(orders)
-    # TODO  
-  end
-  
-  def execute(order)    
-    # TODO
-    # send_order_to_market(order)
-    # get execution result
     
-  end
-  
   def build_initial_position(portfolio)
     strike = get_last_index_value
     make_initial_asset_order(portfolio, strike)
@@ -45,7 +32,7 @@ class Manager
   private
   
   def get_initial_quantity(strike, initial_investment, asset_adjustment)
-    (initial_investment * asset_adjustment / 100) / strike
+    asset_adjustment.percent_from(initial_investment).to_i / strike
   end
   
   def make_initial_asset_order(portfolio,strike)
@@ -53,6 +40,14 @@ class Manager
     quantity = get_initial_quantity(strike, portfolio.initial_invest, @settings.asset_adjustment)
     buy_price = market_data.ask_price
     order = Order.new(@settings.asset_id, quantity, buy_price)
-    execute(order)
+    asset_execute(portfolio, order)
   end
+  
+  def asset_execute(portfolio, order)    
+    # TODO
+    # send_order_to_market(order)
+    # get execution result
+    portfolio.add_asset(order)
+  end
+
 end
