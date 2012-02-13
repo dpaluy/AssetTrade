@@ -9,6 +9,8 @@ describe "Manager" do
   end
   
   it 'should build initial position' do
+    mock(Manager).get_last_index_value {1500}
     @manager.build_initial_position(@portfolio)
+#    @portfolio.total_asset
   end
 end
