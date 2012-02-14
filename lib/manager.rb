@@ -31,14 +31,15 @@ class Manager
   
   private
   
-  def get_initial_quantity(strike, initial_investment, asset_adjustment)
-    asset_adjustment.percent_from(initial_investment).to_i / strike
+  def get_initial_quantity(price, initial_investment, asset_adjustment)
+    asset_adjustment.percent_from(initial_investment).to_i / price
   end
   
   def make_initial_asset_order(portfolio,strike)
     market_data = get_asset_data
-    quantity = get_initial_quantity(strike, portfolio.initial_invest, @settings.asset_adjustment)
     buy_price = market_data.ask_price
+    quantity = get_initial_quantity(buy_price, portfolio.initial_invest, @settings.asset_adjustment)
+puts "************ #{strike} #{buy_price} #{portfolio.initial_invest} #{quantity}"
     order = Order.new(@settings.asset_id, quantity, buy_price)
     asset_execute(portfolio, order)
   end

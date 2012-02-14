@@ -5,17 +5,20 @@ require "tools/numeric"
 require "tools/array"
 
 describe "Manager" do
+
   before(:each) do
-    @portfolio = Portfolio.new 150000
+    @initial_invest = 110000
+    @portfolio = Portfolio.new @initial_invest
     @manager = Manager.new    
   end
   
   it 'should build initial position' do
-    asset_data = get_asset_data(1500)
-    stub(@manager.stock_market).get_index(@manager.settings.index_id) {1500}
+    asset_data = get_asset_data(1100)
+    stub(@manager.stock_market).get_index(@manager.settings.index_id) {1100}
     stub(@manager.stock_market).get_data(@manager.settings.asset_id) {asset_data}
     @manager.build_initial_position(@portfolio)
-    @portfolio.total_asset.should eql((30.percent_from(150000) / 1500).to_i)
+    percent_val = @initial_invest / 100 * 30
+    @portfolio.total_asset.should eql(percent_val / 1110)
   end
   
   def get_asset_data(price)

@@ -16,6 +16,9 @@ describe "Numeric" do
     
     budget = 200
     50.percent_from(budget).should eql(100.to_f)
+    
+    budget = 110000
+    30.percent_from(budget).should eql(33000.to_f)
   end
 
 end

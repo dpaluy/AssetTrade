@@ -1,7 +1,6 @@
 include RR::Adapters::RRMethods
 
 def default_asset_market_data(price)
-  price       = 1150  
   name        = '1091826'
   bid_price   = (price - 10)
   bid_volume  = 100
