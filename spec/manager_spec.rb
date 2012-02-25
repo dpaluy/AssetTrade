@@ -16,6 +16,7 @@ describe "Manager" do
     asset_data = get_asset_data(1100)
     stub(@manager.stock_market).get_index(@manager.settings.index_id) {1100}
     stub(@manager.stock_market).get_data(@manager.settings.asset_id) {asset_data}
+    stub(@manager.stock_market).get_volatility(@manager.settings.index_id) {18}
     @manager.build_initial_position(@portfolio)
     percent_val = @initial_invest / 100 * 30
     @portfolio.total_asset.should eql(percent_val / 1110)

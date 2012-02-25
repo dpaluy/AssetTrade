@@ -5,7 +5,7 @@ class Order
   attr_reader :id, :quantity, :price, :timestamp, :status, :asset_id
   enums %w(NA, SENT, HALF_DONE, DONE)
   
-  # TODO execution pirce, execution qunatity
+  # TODO execution pirce, execution qunatity ?
   
   def initialize(asset_id, quantity, price)
     @quantity = quantity

@@ -7,6 +7,7 @@ class Portfolio
   def initialize(initial_invest)
     @initial_invest = initial_invest  
     @assets = []
+    @options = []
   end
 
   def add_asset(order)

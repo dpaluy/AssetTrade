@@ -36,3 +36,11 @@ Then /^it should buy assets worth (\d+)% of portfolio$/ do |percentage|
   @portfolio.total_asset.should eql(stock_invest / (@asset_price + 10))
 end
 
+Given /^Market volatility is (\d+)$/ do |volatility|
+  stub(@manager.stock_market).get_volatility(@manager.settings.index_id) {volatility.to_i}
+end
+
+Then /^it should buy (\d+) options P(\d+) and sell (\d+) options P(\d+)$/ do |arg1, arg2, arg3, arg4|
+  pending # express the regexp above with the code you wish you had
+end
+
